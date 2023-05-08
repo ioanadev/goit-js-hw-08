@@ -1,8 +1,8 @@
 // Add imports above this line
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-const lightbox = require('simplelightbox');
-//import SimpleLightbox from 'simplelightbox';
+
+import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 console.log(galleryItems);
 let gallery = document.querySelector('.gallery');
@@ -16,7 +16,7 @@ galleryItems.forEach(item => {
         </li >`;
   gallery.insertAdjacentHTML('afterbegin', galleryMarkup);
 });
-new lightbox('.gallery a', {
+new SimpleLightbox('.gallery a', {
   captionsData: `alt`,
   captionDelay: 250,
   showCounter: false,
