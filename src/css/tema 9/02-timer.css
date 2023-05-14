@@ -1,0 +1,31 @@
+#datetime-picker {
+  padding: 10px;
+  background-color: rgb(209, 209, 209);
+}
+button {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: rgb(7, 52, 134);
+  color: aliceblue;
+  border-radius: 50px;
+  border-color: rgb(7, 52, 134);
+}
+.timer {
+  display: flex;
+  align-items: center;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-right: 21px;
+  align-items: center;
+}
+.value {
+  color: red;
+  font-weight: bold;
+}
+.label {
+  font-weight: bold;
+}
