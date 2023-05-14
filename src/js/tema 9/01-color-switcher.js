@@ -4,18 +4,17 @@ function getRandomHexColor() {
     .padStart(6, 0)}`;
 }
 const btnStart = document.querySelector('button[data-start]');
-console.log(btnStart);
 const btnStop = document.querySelector('button[data-stop]');
-console.log(btnStop);
 const body = document.querySelector('body');
 
 let timerId = null;
 
 btnStart.addEventListener('click', () => {
-  d;
   btnStop.removeAttr;
   console.log('S-a apasat butonul start!');
-  btnStart.setAttribute('disabled', 'disabled'); //trece butonul start in starea disableibute('disabled'); //scoate starea de disable de pe butonul de stop
+  btnStart.setAttribute('disabled', 'disabled'); //trece butonul start in starea disabled
+  btnStop.removeAttribute('disabled');
+  //scoate starea de disable de pe butonul de stop
   timerId = setInterval(() => {
     //repeta codul intr-un interval
     body.style.backgroundColor = getRandomHexColor(); //modifica culoarea paginii
