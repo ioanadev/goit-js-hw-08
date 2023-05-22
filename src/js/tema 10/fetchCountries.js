@@ -4,10 +4,14 @@ export function fetchCountries(name) {
   )}?fields=name,capital,population,flags,languages`;
 
   return fetch(url)
-    .then(response => response.json())
-    .then(data => data)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('404');
+      }
+    })
     .catch(error => {
-      console.error('Error:', error);
-      return [];
+      throw new Error(error);
     });
 }

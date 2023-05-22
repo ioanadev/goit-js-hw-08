@@ -94,8 +94,15 @@ function handleSearch() {
     return;
   }
 
-  fetchCountries(searchQuery).then(countries => displayCountries(countries));
+  fetchCountries(searchQuery)
+    .then(countries => displayCountries(countries))
+    .catch(error => {
+      if (error.message === '404') {
+        Notify.failure('Oops, there is no country with that name');
+      } else {
+        console.error('Error:', error);
+      }
+    });
 }
-
 const debouncedSearch = debounce(handleSearch, DEBOUNCE_DELAY);
 searchBox.addEventListener('input', debouncedSearch);
