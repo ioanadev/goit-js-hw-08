@@ -58,7 +58,7 @@ function displayCountries(countries) {
     return;
   }
 
-  if (countries.length > 2 && countries.length < 10) {
+  if (countries.length >= 2 && countries.length <= 10) {
     countries.forEach(country => {
       CountryInfo.innerHTML = '';
       const listItem = document.createElement('li');
