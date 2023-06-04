@@ -1,0 +1,49 @@
+.header {
+  background-color: mediumturquoise;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+  padding: 10px;
+  display: flex;
+}
+.goback {
+  color: darkblue;
+  text-decoration: none;
+
+  width: 10%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.goback:hover {
+  color: aliceblue;
+}
+.search-form {
+  gap: 10px;
+  width: 90%;
+  display: flex;
+  margin-right: 10%;
+  justify-content: center;
+  align-items: center;
+}
+input {
+  padding: 5px;
+  border-radius: 10px;
+  border-color: white;
+  width: 30%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.button {
+  padding: 5px;
+  border-radius: 10px;
+  width: 10%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+  border-color: mediumturquoise;
+  background-color: blanchedalmond;
+  color: darkblue;
+}
+.button:hover {
+  background-color: rgb(113, 193, 219);
+  color: white;
+}

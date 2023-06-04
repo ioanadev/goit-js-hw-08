@@ -28,8 +28,10 @@ function createPromise(position, delay) {
 form.addEventListener('submit', e => {
   e.preventDefault();
   const delay = parseInt(delayInput.value);
+  console.log(delay);
   const step = parseInt(stepInput.value);
   const amount = amountInput.value;
+  console.log(amount);
 
   for (let i = 0; i < amount; i++) {
     const position = i + 1;
