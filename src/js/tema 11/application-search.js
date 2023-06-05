@@ -13,6 +13,7 @@ form.addEventListener('submit', event => {
   searchQuery = event.target.searchQuery.value;
   console.log(searchQuery);
   searchImages();
+  clearGallery();
 });
 
 async function searchImages() {
@@ -39,7 +40,9 @@ async function searchImages() {
     console.log(error);
   }
 }
-
+function clearGallery() {
+  gallery.innerHTML = '';
+}
 function makeImageCard(image) {
   const card = document.createElement('div');
   card.classList.add('photo-card');
