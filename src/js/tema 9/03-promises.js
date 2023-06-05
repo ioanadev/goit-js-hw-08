@@ -30,6 +30,7 @@ form.addEventListener('submit', e => {
   const delay = parseInt(delayInput.value);
   console.log(delay);
   const step = parseInt(stepInput.value);
+  console.log(step);
   const amount = amountInput.value;
   console.log(amount);
 

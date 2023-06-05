@@ -47,3 +47,33 @@ input {
   background-color: rgb(113, 193, 219);
   color: white;
 }
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+.photo-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 25%;
+  /*gap: 2%;*/
+  /*margin-right: 1px;*/
+}
+.photo-card:nth-child(4n) {
+  margin-right: 0;
+}
+.info {
+  display: flex;
+  gap: 2%;
+  max-width: 100%;
+}
+.image {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  max-width: 100%;
+}
+/*.info-value {
+  margin-left: 2px;
+}*/

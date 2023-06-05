@@ -1,46 +1,36 @@
 import axios from 'axios';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-const searchForm = document.getElementById('search-form');
-console.log(searchForm);
-const button = document.querySelector('.button');
-console.log(button);
-const searchInput = document.querySelector('input[name="searchQuery"]');
-console.log(searchInput);
+const form = document.getElementById('search-form');
+console.log(form);
 const gallery = document.querySelector('.gallery');
-const searchVal = searchInput.value;
 
-const API_KEY = '36995967-7696682f503bb4e5597a47b78';
-const url = `https://pixabay.com/api/?key=${API_KEY}&q=${searchVal}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40`;
-async function getImages() {
+console.log(gallery);
+let currentPage = 1;
+let searchQuery = '';
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  console.log('s - a apasat butonul...');
+  searchQuery = event.target.searchQuery.value;
+  console.log(searchQuery);
+  searchImages();
+});
+
+async function searchImages() {
+  const API_KEY = '36995967-7696682f503bb4e5597a47b78';
+  const url = `https://pixabay.com/api/?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&lang=ro`;
   try {
-    const data = await axios(url);
-    console.log('Data:', data);
-    const imageObject = data.data.hits;
-    console.log(imageObject.length);
-    if (imageObject.length == 0) {
+    const response = await axios(url);
+    console.log('Response:', response.data);
+    const images = response.data.hits;
+    console.log(images);
+    if (images === 0) {
       Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
     } else {
-      imageObject.forEach(image => {
-        const {
-          webformatURL,
-          largeImageURL,
-          tags,
-          likes,
-          views,
-          comments,
-          downloads,
-        } = image;
-        console.log(image);
-        console.log(webformatURL);
-        console.log(largeImageURL);
-        console.log(tags);
-        console.log(likes);
-        console.log(views);
-        console.log(comments);
-        console.log(downloads);
-        // makeGalleryCard(image);
+      images.forEach(image => {
+        const card = makeImageCard(image);
+        gallery.appendChild(card);
       });
     }
   } catch (error) {
@@ -48,44 +38,32 @@ async function getImages() {
   }
 }
 
-button.addEventListener('click', e => {
-  e.preventDefault();
-  getImages();
-  makeGalleryCard();
-});
-const makeGalleryCard = () => {
-  const photoCard = document.createElement('div');
-  photoCard.classList.add('photo-info');
-  const searchImage = document.createElement('img');
-  const infoSection = document.createElement('div');
-  infoSection.appendChild(makeInfoItems('likes', likes));
-  infoSection.dataset.likes = likes;
-  infoSection.appendChild(makeInfoItems('views', views));
-  infoSection.dataset.views = views;
-  infoSection.appendChild(makeInfoItems('comments', comments));
-  infoSection.dataset.comments = comments;
-  infoSection.appendChild(makeInfoItems('downloads', downloads));
-  infoSection.dataset.downloads = downloads;
-  photoCard.appendChild(searchImage);
-  photoCard.appendChild(infoSection);
-  gallery.appendChild(photoCard);
-  // });
-};
-const makeInfoItems = (dataInfo, text) => {
-  const paragrafInfo = document.createElement('p');
-  paragrafInfo.classList.add('info-item');
-  const boldInfo = document.createElement('b');
-  paragrafInfo.appendChild(boldInfo);
-  return paragrafInfo;
-};
-/*const displayImages = images => {
-  gallery.innerHTML = '';
-  console.log(images);
-  //gallery.appendChild(makeGalleryCard(images));*/
-/*if (images.length == 0) {
-    console.log('Nu s-au gasit imagini pt cuvantul introdus');
-  } else {
-    gallery.appendChild(makeGalleryCard(images));
-  }*/
-/*};*/
-//displayImages();
+function makeImageCard(image) {
+  const card = document.createElement('div');
+  card.classList.add('photo-card');
+  const img = document.createElement('img');
+  img.src = image.webformatURL;
+  img.alt = image.tags;
+  img.loading = 'lazy';
+  img.classList.add('image');
+  card.appendChild(img);
+  const contInfo = document.createElement('div');
+  contInfo.classList.add('info');
+  contInfo.appendChild(makeImageInfo('Likes:', image.likes));
+  contInfo.appendChild(makeImageInfo('Views:', image.views));
+  contInfo.appendChild(makeImageInfo('Comments:', image.comments));
+  contInfo.appendChild(makeImageInfo('Downloads:', image.downloads));
+  card.appendChild(contInfo);
+  return card;
+}
+
+function makeImageInfo(label, value) {
+  const paragraf = document.createElement('p');
+  const infoLabel = document.createElement('b');
+  infoLabel.textContent = label;
+  const infoValue = document.createTextNode(value);
+  //infoValue.classList.add('info-value');
+  paragraf.appendChild(infoLabel);
+  paragraf.appendChild(infoValue);
+  return paragraf;
+}
