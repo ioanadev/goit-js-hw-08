@@ -22,8 +22,10 @@ async function searchImages() {
     const response = await axios(url);
     console.log('Response:', response.data);
     const images = response.data.hits;
-    console.log(images);
-    if (images === 0) {
+    //const total = response.total;
+    //  console.log(images.length);
+    //  console.log(images);
+    if (images.length === 0) {
       Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
@@ -59,6 +61,7 @@ function makeImageCard(image) {
 
 function makeImageInfo(label, value) {
   const paragraf = document.createElement('p');
+  paragraf.classList.add('paragraf-info');
   const infoLabel = document.createElement('b');
   infoLabel.textContent = label;
   const infoValue = document.createTextNode(value);
