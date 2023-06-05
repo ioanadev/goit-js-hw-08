@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 const form = document.getElementById('search-form');
 console.log(form);
 const gallery = document.querySelector('.gallery');
@@ -46,12 +48,21 @@ function clearGallery() {
 function makeImageCard(image) {
   const card = document.createElement('div');
   card.classList.add('photo-card');
+  const linkImage = document.createElement('a');
+  linkImage.href = image.largeImageURL;
+  // linkImage.addEventListener('click', event => {
+  //   event.preventDefault();
+  //   const lightbox = new SimpleLightbox('.gallery a');
+  //   lightbox.open();
+  // });
   const img = document.createElement('img');
   img.src = image.webformatURL;
   img.alt = image.tags;
   img.loading = 'lazy';
   img.classList.add('image');
-  card.appendChild(img);
+  linkImage.appendChild(img);
+  card.appendChild(linkImage);
+
   const contInfo = document.createElement('div');
   contInfo.classList.add('info');
   contInfo.appendChild(makeImageInfo('Likes:', image.likes));
@@ -59,6 +70,7 @@ function makeImageCard(image) {
   contInfo.appendChild(makeImageInfo('Comments:', image.comments));
   contInfo.appendChild(makeImageInfo('Downloads:', image.downloads));
   card.appendChild(contInfo);
+
   return card;
 }
 
