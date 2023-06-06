@@ -8,9 +8,7 @@
 .goback {
   color: darkblue;
   text-decoration: none;
-
   width: 10%;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -72,19 +70,19 @@ input {
 .info {
   display: flex;
   justify-content: center;
-  gap: 3%;
+  /* gap: 3%;*/
   max-width: 100%;
 }
 .paragraf-info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: x-small;
+  /*font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: x-small;*/
 }
 .image {
-  width: 396px;
-  height: 250px;
+  /*width: 396px;
+    height: 250px;*/
   object-fit: cover;
   max-width: 100%;
   max-height: 100%;
@@ -93,3 +91,51 @@ input {
 /*.info-value {
   margin-left: 2px;
 }*/
+@media (min-width: 1200px) {
+  .image {
+    width: 396px;
+    height: 250px;
+  }
+  .paragraf-info {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: x-small;
+  }
+  .info {
+    gap: 5%;
+  }
+}
+@media (min-width: 1000px) and (max-width: 1199px) {
+  .image {
+    /* max-width: 150%;
+    max-height: 150%;*/
+    width: 300px;
+    height: 200px;
+  }
+  .paragraf-info {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: x-small;
+  }
+  .info {
+    gap: 3%;
+    /* max-width: 100%;*/
+  }
+}
+@media (min-width: 768px) and (max-width: 999px) {
+  .image {
+    width: 250px;
+    height: 150px;
+  }
+  .paragraf-info {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+      sans-serif;
+    max-width: 90%;
+  }
+  .info {
+    gap: 10%;
+    max-width: 30%;
+    font-size: x-small;
+  }
+  .goback {
+    font-size: small;
+  }
+}
