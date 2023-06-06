@@ -55,9 +55,9 @@ function makeImageCard(image) {
   //   const lightbox = new SimpleLightbox('.gallery a');
   //   lightbox.open();
   // });
-  var gallery = $('.gallery a').simpleLightbox();
+  //var gallery = $('.gallery a').simpleLightbox();
 
-  gallery.refresh();
+  //gallery.refresh();
   
   const img = document.createElement('img');
   img.src = image.webformatURL;
