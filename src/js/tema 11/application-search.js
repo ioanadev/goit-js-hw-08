@@ -1,76 +1,96 @@
 import axios from 'axios';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Report } from 'notiflix/build/notiflix-report-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 const form = document.getElementById('search-form');
-console.log(form);
 let gallery = document.querySelector('.gallery');
-const button = console.log(gallery);
+const loadMore = document.querySelector('.load-more');
+loadMore.style.visibility = 'hidden';
 let currentPage = 1;
+let perPage = 40;
 let searchQuery = '';
-//---------
+
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 form.addEventListener('submit', event => {
   event.preventDefault();
-  console.log('s - a apasat butonul...');
   searchQuery = event.target.searchQuery.value;
-  console.log('Search:', searchQuery);
+  currentPage = 1;
   clearGallery();
   if (searchQuery.trim() === '') {
-    Notify.failure('Please enter a search query.');
+    loadMore.style.visibility = 'hidden';
+    Report.failure('Please enter a search query.', '');
   } else {
     searchImages();
   }
 });
-//+++++++++++++
-/*function checkSearchQuery() {
-  if (searchQuery.trim() === '') {
-    Notify.failure('Please enter a search query.');
-    clearGallery();
-    return;
-  }
-}*/
-//@@@@@@@@@@@@@@@@@@@@@@@
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+loadMore.addEventListener('click', event => {
+  event.preventDefault();
+  currentPage++;
+  searchImages();
+});
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 async function searchImages() {
   const API_KEY = '36995967-7696682f503bb4e5597a47b78';
-  //checkSearchQuery();
-  const url = `https://pixabay.com/api/?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&lang=ro`;
+
+  const url = `https://pixabay.com/api/?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${perPage}&page=${currentPage}&lang=ro`;
 
   try {
     const response = await axios(url);
     console.log('Response:', response.data);
     const images = response.data.hits;
-    //const total = response.total;
-    //  console.log(images.length);
-    //  console.log(images);
+    const totalHits = response.data.totalHits;
     if (images.length === 0) {
-      Notify.failure(
-        'Sorry, there are no images matching your search query. Please try again.'
+      loadMore.style.visibility = 'hidden';
+      Report.failure(
+        'Sorry',
+        'There are no images matching your search query. Please try again.'
       );
+      //  } else if (currentPage * perPage > totalHits) {
+      //    console.log(
+      //      'We	&acute;re sorry, but you&acute;ve reached the end of search results.'
+      //     );
+      //  Notify.info(
+      //    'We	&acute;re sorry, but you&acute;ve reached the end of search results.'
+      //  );
     } else {
       images.forEach(image => {
         const card = makeImageCard(image);
         gallery.appendChild(card);
+        loadMore.style.visibility = 'visible';
       });
+      /////////// loadMoreButton();
       const lightbox = new SimpleLightbox('.gallery a');
       lightbox.refresh();
+    }
+    if (currentPage * perPage > totalHits) {
+      Report.info(
+        '',
+        'We	&acute;re sorry, but you&acute;ve reached the end of search results.'
+      );
+      loadMore.style.visibility = 'hidden';
+    } else if (currentPage > 1) {
+      Notify.info(
+        `${currentPage * perPage} pictures out of ${totalHits} were displayed!`
+      );
     }
   } catch (error) {
     console.log(error);
   }
 }
 
-//#####################
+//##################################################################
 function clearGallery() {
   gallery.innerHTML = '';
 }
 
-//^^^^^^^^^^^^^^^^^^^
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function makeImageCard(image) {
   const card = document.createElement('div');
   card.classList.add('photo-card');
   const linkImage = document.createElement('a');
   linkImage.href = image.largeImageURL;
-
   const img = document.createElement('img');
   img.src = image.webformatURL;
   img.alt = image.tags;
@@ -78,7 +98,6 @@ function makeImageCard(image) {
   img.classList.add('image');
   linkImage.appendChild(img);
   card.appendChild(linkImage);
-
   const contInfo = document.createElement('div');
   contInfo.classList.add('info');
   contInfo.appendChild(makeImageInfo('Likes:', image.likes));
@@ -96,8 +115,9 @@ function makeImageInfo(label, value) {
   const infoLabel = document.createElement('b');
   infoLabel.textContent = label;
   const infoValue = document.createTextNode(value);
-  //infoValue.classList.add('info-value');
   paragraf.appendChild(infoLabel);
   paragraf.appendChild(infoValue);
   return paragraf;
 }
+
+//@@@@@@@@@@@@@@@@@@@@@@@
