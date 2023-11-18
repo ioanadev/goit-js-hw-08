@@ -1,9 +1,9 @@
-import '/src/css/tema 10/styles.css';
+// import '/src/css/tema 10/styles.css';
 
 const DEBOUNCE_DELAY = 300;
 import { fetchCountries } from './fetchCountries.js';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-var debounce = require('lodash.debounce');
+let debounce = require('lodash.debounce');
 
 const searchBox = document.getElementById('search-box');
 const countryList = document.querySelector('.country-list');

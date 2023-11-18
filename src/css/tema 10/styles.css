@@ -14,9 +14,11 @@ body {
 
 #search-box {
   font: inherit;
-  padding: 8px;
-  max-width: 320px;
-  margin-bottom: 16px;
+  padding: 10px;
+  width: 300px; 
+  margin-top: 16px;
+  border-radius: 4%;
+  border-color: blue;
 }
 ul {
   list-style-type: none;
